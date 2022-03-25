@@ -1,0 +1,16 @@
+{
+  "name": "savenero-gh-actions",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "action": "node ./cron-update-prices-elektra.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@supabase/supabase-js": "^1.31.2",
+    "crawler": "^1.3.0"
+  }
+}
