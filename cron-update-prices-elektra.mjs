@@ -81,10 +81,14 @@ async function handler() {
               }
 
               if (originalPrice !== price && price > 0) {
+                const priceDiff = originalPrice - price;
+                const percentageDiff = priceDiff / originalPrice;
+
                 productsPriceChanged.push({
                   id,
                   current_price: price,
                   previous_price: originalPrice,
+                  percentage_dif: percentageDiff,
                   updated_at: crawledAt,
                 });
               }
