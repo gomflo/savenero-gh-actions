@@ -43,6 +43,7 @@ async function handler() {
         productsNotFound.push({
           id: product.id,
           url: product.url,
+          has_stock: false,
           crawled_at: crawledAt,
         });
       }
