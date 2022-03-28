@@ -52,6 +52,7 @@ async function handler() {
         const selectors = {
           elektra: {
             price: $("meta[property='product:price:amount']").attr("content"),
+            stock: $("[property='product:availability']").attr("content"),
           },
         };
 
@@ -85,11 +86,15 @@ async function handler() {
                 const priceDiff = originalPrice - price;
                 const percentageDiff = priceDiff / originalPrice;
 
+                const hasStock =
+                  selectors.elektra.stock === "instock" ? true : false;
+
                 productsPriceChanged.push({
                   id,
                   current_price: price,
                   previous_price: originalPrice,
                   percentage_dif: percentageDiff,
+                  has_stock: hasStock,
                   updated_at: crawledAt,
                 });
               }
