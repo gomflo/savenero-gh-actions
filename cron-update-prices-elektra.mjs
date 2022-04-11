@@ -2,10 +2,13 @@ import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
-
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-// comment to push
+const headers = {
+  "user-agent":
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.109 Safari/537.36",
+};
+
 const PRODUCTS = "products";
 import Crawler from "crawler";
 
@@ -13,7 +16,7 @@ async function handler() {
   const { data: products, error } = await supabase
     .from(PRODUCTS)
     .select("*")
-    .like("url", "%www.elektra.com.mx%")
+    .eq("store_id", 7) // id 7 es elektra
     .order("crawled_at", { ascending: true, nullsFirst: true })
     .limit(5000);
 
@@ -27,10 +30,7 @@ async function handler() {
 
   const c = new Crawler({
     maxConnections: 100,
-    headers: {
-      "user-agent":
-        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.109 Safari/537.36",
-    },
+    headers,
     callback: function (error, res, done) {
       const $ = res.$;
 
@@ -39,7 +39,9 @@ async function handler() {
         timeZone: "America/Monterrey",
       });
 
-      if (res.statusCode === 404 || res.statusCode === 410) {
+      const { statusCode } = res;
+
+      if (statusCode !== 200) {
         productsNotFound.push({
           id: product.id,
           url: product.url,
@@ -48,59 +50,57 @@ async function handler() {
         });
       }
 
-      if ($ && !error) {
+      if ($ && !error && statusCode === 200) {
+        const host = res.request.uri.host;
+
+        let price = 0;
+        const { current_price: originalPrice, id } = product;
+
+        productsUpdateCrawledDate.push({
+          id,
+          crawled_at: crawledAt,
+        });
+
+        console.log(
+          "counter:",
+          counter,
+          id,
+          product.url,
+          "products_to_update:",
+          productsPriceChanged.length
+        );
+
         const selectors = {
           elektra: {
-            price: $("meta[property='product:price:amount']").attr("content"),
+            price: $("[property='product:price:amount']").attr("content"),
             stock: $("[property='product:availability']").attr("content"),
           },
         };
 
-        if (res.statusCode === 200) {
-          const host = res.request.uri.host;
+        switch (host) {
+          case "www.elektra.com.mx":
+            if (selectors.elektra.price) {
+              price = parseFloat(selectors.elektra.price);
+            }
 
-          let price = 0;
-          const { current_price: originalPrice, id } = product;
+            if (originalPrice !== price && price > 0) {
+              const priceDiff = originalPrice - price;
+              const percentageDiff = priceDiff / originalPrice;
 
-          productsUpdateCrawledDate.push({
-            id,
-            crawled_at: crawledAt,
-          });
+              const hasStock =
+                selectors.elektra.stock === "instock" ? true : false;
 
-          console.log(
-            "counter:",
-            counter,
-            id,
-            product.url,
-            "products_to_update:",
-            productsPriceChanged.length
-          );
+              productsPriceChanged.push({
+                id,
+                current_price: price,
+                previous_price: originalPrice,
+                percentage_dif: percentageDiff,
+                has_stock: hasStock,
+                updated_at: crawledAt,
+              });
+            }
 
-          switch (host) {
-            case "www.elektra.com.mx":
-              if (selectors.elektra.price) {
-                price = parseFloat(selectors.elektra.price);
-              }
-
-              if (originalPrice !== price && price > 0) {
-                const priceDiff = originalPrice - price;
-                const percentageDiff = priceDiff / originalPrice;
-
-                const hasStock =
-                  selectors.elektra.stock === "instock" ? true : false;
-
-                productsPriceChanged.push({
-                  id,
-                  current_price: price,
-                  previous_price: originalPrice,
-                  percentage_dif: percentageDiff,
-                  has_stock: hasStock,
-                  updated_at: crawledAt,
-                });
-              }
-
-              break;
-          }
+            break;
         }
 
         counter++;
