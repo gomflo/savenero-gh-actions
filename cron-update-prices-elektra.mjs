@@ -1,5 +1,3 @@
-process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
-
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.SUPABASE_URL;
@@ -80,7 +78,7 @@ async function handler() {
         };
 
         switch (host) {
-          case "www.elektra.com.mx":
+          case "www.elektra.mx":
             if (selectors.elektra.price) {
               price = parseFloat(selectors.elektra.price);
             }
