@@ -18,7 +18,7 @@ async function handler() {
     .select("*")
     .eq("store_id", 7) // id 7 es elektra
     .order("crawled_at", { ascending: true, nullsFirst: true })
-    .limit(5000);
+    .limit(10000);
 
   console.log("products.length", products.length, "error:", error);
 
