@@ -100,6 +100,8 @@ async function handler() {
   for (let category of categories) {
     await crawl(category);
   }
+
+  handler(); // > run 4 ever
 }
 
 handler();
