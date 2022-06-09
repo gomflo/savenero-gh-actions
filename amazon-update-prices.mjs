@@ -19,24 +19,24 @@ const headers = {
 
 const categoriesUrl = [
   "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9482558011&fs=true&qid=1654573141&ref=sr_pg_2", //> todos electronicos
-  // "https://www.amazon.com.mx/s?i=grocery&rh=n%3A17724630011&fs=true&qid=1654571185&ref=sr_pg_2", //> vinos y licores
-  // "https://www.amazon.com.mx/s?i=hi&rh=n%3A9482670011&fs=true&qid=1654632162&ref=sr_pg_2", //> todo herramientas mejoras del hogar
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687280011&fs=true&qid=1654608099&ref=sr_pg_2", //> accesorios electronicos
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687422011&fs=true&qid=1654744900&ref=sr_pg_2", //> celulares y accesorios
-  // "https://www.amazon.com.mx/s?i=pets&rh=n%3A11782336011&fs=true&page=2&qid=1654657791&ref=sr_pg_2", //> todo en mascotas
-  // "https://www.amazon.com.mx/s?i=toys&rh=n%3A11260442011&fs=true&qid=1654628503&ref=sr_pg_2", //> todo en juegos y juguetes
-  // "https://www.amazon.com.mx/s?i=kitchen&rh=n%3A9482593011&fs=true&qid=1654626035&ref=sr_pg_2", //> todo en hogar y cocina
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687880011&fs=true&qid=1654621330&ref=sr_pg_2", //> todo en computo y tablets
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687308011&fs=true&qid=1654615881&ref=sr_pg_2", //> audifonos
-  // "https://www.amazon.com.mx/s?i=toys&rh=n%3A11337429011&fs=true&qid=1654610467&ref=sr_pg_2", //> figuras de accion
-  // "https://www.amazon.com.mx/s?i=videogames&rh=n%3A9482640011&fs=true&qid=1654618308&ref=sr_pg_2", //> todo en videojuegos
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A10189676011&fs=true&qid=1654573659&ref=sr_pg_2", //> tablets
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687604011&fs=true&qid=1654573429&ref=sr_pg_2", //> tocadiscos
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687469011&fs=true&qid=1654573752&ref=sr_pg_2", //> smartwatch
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687578011&fs=true&qid=1654573493&ref=sr_pg_2", //> streaming devices
-  // "https://www.amazon.com.mx/s?i=electronics&rh=n%3A10189669011&fs=true&qid=1654571232&ref=sr_pg_2", //> laptops
-  // "https://www.amazon.com.mx/s?i=fashion&rh=n%3A14093001011&fs=true&qid=1654655223&ref=sr_pg_2", //> todo en bolas maletas viajes
-  // "https://www.amazon.com.mx/s?i=automotive&rh=n%3A13848848011&fs=true&qid=1654634508&ref=sr_pg_2", //> todo auto y moto
+  "https://www.amazon.com.mx/s?i=grocery&rh=n%3A17724630011&fs=true&qid=1654571185&ref=sr_pg_2", //> vinos y licores
+  "https://www.amazon.com.mx/s?i=hi&rh=n%3A9482670011&fs=true&qid=1654632162&ref=sr_pg_2", //> todo herramientas mejoras del hogar
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687280011&fs=true&qid=1654608099&ref=sr_pg_2", //> accesorios electronicos
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687422011&fs=true&qid=1654744900&ref=sr_pg_2", //> celulares y accesorios
+  "https://www.amazon.com.mx/s?i=pets&rh=n%3A11782336011&fs=true&page=2&qid=1654657791&ref=sr_pg_2", //> todo en mascotas
+  "https://www.amazon.com.mx/s?i=toys&rh=n%3A11260442011&fs=true&qid=1654628503&ref=sr_pg_2", //> todo en juegos y juguetes
+  "https://www.amazon.com.mx/s?i=kitchen&rh=n%3A9482593011&fs=true&qid=1654626035&ref=sr_pg_2", //> todo en hogar y cocina
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687880011&fs=true&qid=1654621330&ref=sr_pg_2", //> todo en computo y tablets
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687308011&fs=true&qid=1654615881&ref=sr_pg_2", //> audifonos
+  "https://www.amazon.com.mx/s?i=toys&rh=n%3A11337429011&fs=true&qid=1654610467&ref=sr_pg_2", //> figuras de accion
+  "https://www.amazon.com.mx/s?i=videogames&rh=n%3A9482640011&fs=true&qid=1654618308&ref=sr_pg_2", //> todo en videojuegos
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A10189676011&fs=true&qid=1654573659&ref=sr_pg_2", //> tablets
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687604011&fs=true&qid=1654573429&ref=sr_pg_2", //> tocadiscos
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687469011&fs=true&qid=1654573752&ref=sr_pg_2", //> smartwatch
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A9687578011&fs=true&qid=1654573493&ref=sr_pg_2", //> streaming devices
+  "https://www.amazon.com.mx/s?i=electronics&rh=n%3A10189669011&fs=true&qid=1654571232&ref=sr_pg_2", //> laptops
+  "https://www.amazon.com.mx/s?i=fashion&rh=n%3A14093001011&fs=true&qid=1654655223&ref=sr_pg_2", //> todo en bolas maletas viajes
+  "https://www.amazon.com.mx/s?i=automotive&rh=n%3A13848848011&fs=true&qid=1654634508&ref=sr_pg_2", //> todo auto y moto
 ];
 
 async function crawl(page = 1, catUrl) {
@@ -45,7 +45,7 @@ async function crawl(page = 1, catUrl) {
 
   console.log(request.status);
   if (request.status === 503) {
-    await sleep(7000);
+    await sleep(10000);
     await crawl(page, catUrl);
   }
 
@@ -96,7 +96,7 @@ async function crawl(page = 1, catUrl) {
   if (nextUrl) {
     const nextPage = new URLSearchParams(nextUrl).get("page");
 
-    await sleep(5000);
+    await sleep(10000);
     await crawl(nextPage, catUrl);
   }
 }
