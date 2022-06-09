@@ -19,7 +19,7 @@ async function handler() {
   const { data: products, error } = await supabase
     .from(PRODUCTS)
     .select("*")
-    .eq("store_id", 11) // id 11 es Soriana
+    .eq("store_id", 18) // id 18 es Soriana
     .order("crawled_at", { ascending: true, nullsFirst: true })
     .limit(500);
 
@@ -32,7 +32,7 @@ async function handler() {
   let counter = 1;
 
   const c = new Crawler({
-    maxConnections: 100,
+    maxConnections: 10,
     headers,
     callback: function (error, res, done) {
       const $ = res.$;
@@ -65,6 +65,7 @@ async function handler() {
         });
 
         console.log(
+          res.statusCode,
           "counter:",
           counter,
           id,
@@ -74,47 +75,32 @@ async function handler() {
         );
 
         const selectors = {
-          soriana: {
-            // price: $("span.value").attr("content"),
-            // price: JSON.parse($($("script[type='application/ld+json']")[0]).text()).offers.price,
-            price: $("script[type='application/ld+json']"),
-            stock: $("[property='product:availability']").attr("content"),
-          },
+          price: $(".price.price-colour-final-pdp").text(),
         };
 
-        switch (host) {
-          case "www.soriana.com":
-            if (selectors.soriana.price) {
-              const priceSel = selectors.soriana.price;
+        if (selectors.price) {
+          price = selectors.price
+            .toLowerCase()
+            .replace("$", "")
+            .replaceAll(",", "")
+            .replace(" / kg", "");
 
-              if (priceSel.length > 0) {
-                const priceTxt = $(priceSel[0]).text();
-                const priceJson = JSON.parse(priceTxt);
+          price = parseFloat(price);
+        }
 
-                if (priceJson?.offers?.price) {
-                  price = parseFloat(priceJson.offers.price);
-                }
-              }
-            }
+        // console.log(price, originalPrice);
 
-            if (originalPrice !== price && price > 0) {
-              const priceDiff = originalPrice - price;
-              const percentageDiff = priceDiff / originalPrice;
+        if (originalPrice !== price && price > 0) {
+          const priceDiff = originalPrice - price;
+          const percentageDiff = priceDiff / originalPrice;
 
-              const hasStock =
-                selectors.soriana.stock === "instock" ? true : false;
-
-              productsPriceChanged.push({
-                id,
-                current_price: price,
-                previous_price: originalPrice,
-                percentage_dif: percentageDiff,
-                has_stock: hasStock,
-                updated_at: crawledAt,
-              });
-            }
-
-            break;
+          productsPriceChanged.push({
+            id,
+            current_price: price,
+            previous_price: originalPrice,
+            percentage_dif: percentageDiff,
+            updated_at: crawledAt,
+          });
         }
 
         counter++;

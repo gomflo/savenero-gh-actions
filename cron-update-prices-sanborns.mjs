@@ -19,7 +19,7 @@ async function handler() {
   const { data: products, error } = await supabase
     .from(PRODUCTS)
     .select("*")
-    .eq("store_id", 11) // id 11 es Soriana
+    .eq("store_id", 12) // id 11 es Sanborns
     .order("crawled_at", { ascending: true, nullsFirst: true })
     .limit(500);
 
@@ -74,35 +74,23 @@ async function handler() {
         );
 
         const selectors = {
-          soriana: {
-            // price: $("span.value").attr("content"),
-            // price: JSON.parse($($("script[type='application/ld+json']")[0]).text()).offers.price,
-            price: $("script[type='application/ld+json']"),
-            stock: $("[property='product:availability']").attr("content"),
+          sanborns: {
+            price: $("#precioInt").val(),
+            stock: $(".alertaAgotado"),
           },
         };
 
         switch (host) {
-          case "www.soriana.com":
-            if (selectors.soriana.price) {
-              const priceSel = selectors.soriana.price;
-
-              if (priceSel.length > 0) {
-                const priceTxt = $(priceSel[0]).text();
-                const priceJson = JSON.parse(priceTxt);
-
-                if (priceJson?.offers?.price) {
-                  price = parseFloat(priceJson.offers.price);
-                }
-              }
+          case "www.sanborns.com.mx":
+            if (selectors.sanborns.price) {
+              price = parseFloat(selectors.sanborns.price);
             }
 
             if (originalPrice !== price && price > 0) {
               const priceDiff = originalPrice - price;
               const percentageDiff = priceDiff / originalPrice;
 
-              const hasStock =
-                selectors.soriana.stock === "instock" ? true : false;
+              const hasStock = selectors.sanborns.stock ? false : true;
 
               productsPriceChanged.push({
                 id,

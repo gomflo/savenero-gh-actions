@@ -19,9 +19,9 @@ async function handler() {
   const { data: products, error } = await supabase
     .from(PRODUCTS)
     .select("*")
-    .eq("store_id", 11) // id 11 es Soriana
+    .eq("store_id", 15) // id 11 es Radioshack
     .order("crawled_at", { ascending: true, nullsFirst: true })
-    .limit(500);
+    .limit(5000);
 
   console.log("products.length", products.length, "error:", error);
 
@@ -74,35 +74,25 @@ async function handler() {
         );
 
         const selectors = {
-          soriana: {
+          radioshack: {
             // price: $("span.value").attr("content"),
             // price: JSON.parse($($("script[type='application/ld+json']")[0]).text()).offers.price,
-            price: $("script[type='application/ld+json']"),
+            price: $("#price1").text(),
             stock: $("[property='product:availability']").attr("content"),
           },
         };
 
         switch (host) {
-          case "www.soriana.com":
-            if (selectors.soriana.price) {
-              const priceSel = selectors.soriana.price;
-
-              if (priceSel.length > 0) {
-                const priceTxt = $(priceSel[0]).text();
-                const priceJson = JSON.parse(priceTxt);
-
-                if (priceJson?.offers?.price) {
-                  price = parseFloat(priceJson.offers.price);
-                }
-              }
+          case "www.radioshack.com.mx":
+            if (selectors.radioshack.price) {
+              price = parseFloat(selectors.radioshack.price);
             }
 
             if (originalPrice !== price && price > 0) {
               const priceDiff = originalPrice - price;
               const percentageDiff = priceDiff / originalPrice;
 
-              const hasStock =
-                selectors.soriana.stock === "instock" ? true : false;
+              const hasStock = true;
 
               productsPriceChanged.push({
                 id,
@@ -203,7 +193,6 @@ async function handler() {
         );
       }
     }
-    handler();
   });
 }
 
