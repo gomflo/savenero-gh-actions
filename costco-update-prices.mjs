@@ -3,8 +3,8 @@ import { formatISO9075 } from "date-fns";
 import fetch from "node-fetch";
 import xml2js from "xml2js";
 
-const supabaseUrl = "https://djrbcopbtieqgdkowvhs.supabase.co";
-const supabaseKey = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRqcmJjb3BidGllcWdka293dmhzIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NDc5ODA5NTAsImV4cCI6MTk2MzU1Njk1MH0.3Psi3YQPrDsChUsGh6S8FCgiCbnkeoDsL5L-gS3kki0`;
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseKey = process.env.SUPABASE_KEY;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
 const PRODUCTS = "products";
