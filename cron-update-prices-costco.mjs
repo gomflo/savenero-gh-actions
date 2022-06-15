@@ -1,5 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import fetch from "node-fetch";
+import 'dotenv/config'
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;

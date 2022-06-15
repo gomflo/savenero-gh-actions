@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import { formatISO9075 } from "date-fns";
 import fetch from "node-fetch";
 import xml2js from "xml2js";
+import 'dotenv/config'
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;

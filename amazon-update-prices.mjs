@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import fetch from "node-fetch";
 import { formatISO9075 } from "date-fns";
 import cheerio from "cheerio";
+import 'dotenv/config'
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
