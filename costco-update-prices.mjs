@@ -24,6 +24,7 @@ async function getCategories() {
 
   const categories = [];
   categories.push("cos_1.5.6"); // macbooks & imacs category that does not exists in the xml file.
+  categories.push("cos_5.1.1"); // colchones category that does not exits in the xml file.
 
   for (let url of urlset) {
     const category = url.loc[0].split("/").pop();
