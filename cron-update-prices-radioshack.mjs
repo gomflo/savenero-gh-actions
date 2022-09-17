@@ -1,5 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import 'dotenv/config'
+import "dotenv/config";
 
 const supabaseUrl = process.env.SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_KEY;
@@ -19,7 +19,7 @@ async function handler() {
     .select("*")
     .eq("store_id", 15) // id 11 es Radioshack
     .order("crawled_at", { ascending: true, nullsFirst: true })
-    .limit(5000);
+    .limit(1000);
 
   console.log("products.length", products.length, "error:", error);
 
