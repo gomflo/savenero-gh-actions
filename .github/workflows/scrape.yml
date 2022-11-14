@@ -1,17 +1,17 @@
-on:
-  schedule:
-    - cron: "*/10 * * * *"
-env:
-  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-  SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
-name: Scrape Data
-jobs:
-  build:
-    name: Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@main
-      - name: Build
-        run: npm install
-      - name: Scrape
-        run: npm run action
+#on:
+#  schedule:
+#    - cron: "*/10 * * * *"
+#env:
+#  SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+# SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+#name: Scrape Data
+#obs:
+# build:
+#   name: Build
+#    runs-on: ubuntu-latest
+#    steps:
+#      - uses: actions/checkout@main
+#      - name: Build
+#        run: npm install
+#      - name: Scrape
+#        run: npm run action
